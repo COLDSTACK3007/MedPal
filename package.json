@@ -1,0 +1,14 @@
+{
+  "name": "gramcare-ai",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "webapp"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=backend && npm run build --workspace=webapp",
+    "start": "node backend/server.js",
+    "dev": "npm run dev --workspace=webapp"
+  }
+}

@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+model PatientRecord {
+  id        String   @id @default(uuid())
+  patientId String   @unique
+  name      String
+  age       Int
+  gender    String
+  village   String
+  lastVisit String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Stores each MedTrace diagnostic investigation so a patient's case history
+// (inputs given + the structured AI/fallback analysis produced) can be
+// reviewed later instead of being lost after a single session.
+model CaseInvestigation {
+  id          String   @id @default(uuid())
+  // Free-form identifier for the patient this case belongs to (currently the
+  // app's username, since patients aren't yet linked to PatientRecord rows).
+  patientId   String
+  patientName String?
+  input       Json
+  output      Json
+  source      String
+  createdAt   DateTime @default(now())
+
+  @@index([patientId])
+}
